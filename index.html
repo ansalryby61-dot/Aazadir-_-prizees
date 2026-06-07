@@ -1,86 +1,108 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AZADIR.LY - عجلة الجوائز</title><style>
+<title>AZADIR.LY - عجلة الجوائز</title>
+
+<style>
 body{
-margin:0;
 font-family:Tahoma,Arial;
 background:linear-gradient(135deg,#dff4ff,#9fd2ff,#c7e8ff);
+text-align:center;
+padding:20px;
+margin:0;
 min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-padding:20px;
 }
 
 .card{
 background:white;
-max-width:900px;
+max-width:800px;
 width:100%;
 padding:30px;
-border-radius:30px;
-box-shadow:0 15px 40px rgba(0,0,0,.2);
-text-align:center;
+border-radius:25px;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
 }
 
 .logo{
-font-size:55px;
+font-size:50px;
 font-weight:bold;
 color:#0b4f8a;
 }
 
 .pointer{
-font-size:55px;
+font-size:45px;
 color:red;
-margin-bottom:-15px;
+margin-bottom:-10px;
 }
 
 #wheel{
-width:400px;
-height:400px;
-margin:auto;
+width:260px;
+height:260px;
+border:10px solid #1565c0;
 border-radius:50%;
-border:12px solid #1565c0;
-background:radial-gradient(circle,#fff,#dff4ff);
+margin:20px auto;
 display:flex;
 align-items:center;
 justify-content:center;
-box-shadow:0 0 30px rgba(21,101,192,.4);
+font-size:80px;
+background:radial-gradient(circle,#ffffff,#dff4ff);
+box-shadow:0 0 25px rgba(21,101,192,.35);
 transition:transform 7s ease-out;
-}
-
-#wheelPrize{
-font-size:40px;
-font-weight:bold;
-color:#1565c0;
-padding:20px;
 }
 
 button{
 background:#1976d2;
 color:white;
 border:none;
-padding:16px 40px;
-font-size:24px;
-border-radius:15px;
+padding:14px 30px;
+font-size:22px;
+border-radius:10px;
 cursor:pointer;
-margin-top:20px;
+}
+
+button:hover{
+background:#1565c0;
 }
 
 #result{
-margin-top:25px;
-font-size:34px;
+font-size:30px;
+margin-top:20px;
 font-weight:bold;
 color:#0b4f8a;
+min-height:80px;
 }
-</style></head><body><audio id="spinSound">
-<source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
-</audio><div class="card"><div class="logo">AZADIR.LY</div><h2>🎉 عجلة جوائز أزادير 🎉</h2><p>كل فاتورة رابحة</p><div class="pointer">▼</div><div id="wheel">
-<div id="wheelPrize">🎁 اضغط لف العجلة</div>
-</div><button onclick="spinWheel()">🎡 لف العجلة</button>
+</style>
+</head>
 
-<div id="result"></div></div><script>
+<body>
+
+<audio id="spinSound">
+<source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+
+<div class="logo">AZADIR.LY</div>
+
+<h2>🎉 عجلة جوائز أزادير 🎉</h2>
+
+<p>كل فاتورة رابحة</p>
+
+<div class="pointer">▼</div>
+
+<div id="wheel">🎁</div>
+
+<button onclick="spinWheel()">🎡 لف العجلة</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
 
 const common=[
 "متر",
@@ -127,7 +149,6 @@ const rare=[
 let pool=[];
 
 function refillPool(){
-
 pool=[];
 
 common.forEach(x=>pool.push(x));
@@ -137,7 +158,6 @@ if(Math.random()<0.03){
 pool.push(x);
 }
 });
-
 }
 
 refillPool();
@@ -151,6 +171,7 @@ refillPool();
 }
 
 const wheel=document.getElementById("wheel");
+const result=document.getElementById("result");
 
 const rotate=4500+Math.floor(Math.random()*2500);
 
@@ -162,15 +183,16 @@ const idx=Math.floor(Math.random()*pool.length);
 
 const prize=pool.splice(idx,1)[0];
 
-document.getElementById("wheelPrize").innerHTML=
-prize;
+wheel.innerHTML="🎁";
 
-document.getElementById("result").innerHTML=
-"🏆 مبروك!<br><span style='font-size:46px'>"+prize+"</span>";
+result.innerHTML=
+"🎉 مبروك! ربحت:<br><span style='font-size:36px'>"+prize+"</span>";
 
 },7000);
 
 }
 
-</script></body>
+</script>
+
+</body>
 </html>
