@@ -1,30 +1,26 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AZADIR.LY - عجلة الجوائز</title>
-
-<style>
-
+<title>AZADIR.LY - عجلة الجوائز</title><style>
 body{
 margin:0;
-padding:20px;
-font-family:Tahoma,Arial,sans-serif;
+font-family:Tahoma,Arial;
 background:linear-gradient(135deg,#dff4ff,#9fd2ff,#c7e8ff);
 min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
+padding:20px;
 }
 
 .card{
-background:#fff;
-width:100%;
+background:white;
 max-width:900px;
+width:100%;
 padding:30px;
 border-radius:30px;
-box-shadow:0 15px 40px rgba(0,0,0,.20);
+box-shadow:0 15px 40px rgba(0,0,0,.2);
 text-align:center;
 }
 
@@ -32,13 +28,6 @@ text-align:center;
 font-size:55px;
 font-weight:bold;
 color:#0b4f8a;
-margin-bottom:10px;
-}
-
-h2{
-font-size:35px;
-color:#083c68;
-margin:10px 0;
 }
 
 .pointer{
@@ -48,34 +37,24 @@ margin-bottom:-15px;
 }
 
 #wheel{
-width:380px;
-height:380px;
+width:400px;
+height:400px;
 margin:auto;
 border-radius:50%;
 border:12px solid #1565c0;
-background:radial-gradient(circle,#ffffff,#dff4ff);
+background:radial-gradient(circle,#fff,#dff4ff);
 display:flex;
 align-items:center;
 justify-content:center;
-box-shadow:
-0 0 30px rgba(21,101,192,.40),
-inset 0 0 20px rgba(21,101,192,.15);
-transition:transform 4s ease-out;
-}
-
-.wheel-content{
-text-align:center;
-}
-
-#wheelIcon{
-font-size:95px;
+box-shadow:0 0 30px rgba(21,101,192,.4);
+transition:transform 7s ease-out;
 }
 
 #wheelPrize{
-font-size:24px;
+font-size:40px;
 font-weight:bold;
 color:#1565c0;
-margin-top:10px;
+padding:20px;
 }
 
 button{
@@ -86,12 +65,7 @@ padding:16px 40px;
 font-size:24px;
 border-radius:15px;
 cursor:pointer;
-font-weight:bold;
-margin-top:15px;
-}
-
-button:hover{
-transform:scale(1.05);
+margin-top:20px;
 }
 
 #result{
@@ -99,64 +73,32 @@ margin-top:25px;
 font-size:34px;
 font-weight:bold;
 color:#0b4f8a;
-min-height:90px;
 }
+</style></head><body><audio id="spinSound">
+<source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
+</audio><div class="card"><div class="logo">AZADIR.LY</div><h2>🎉 عجلة جوائز أزادير 🎉</h2><p>كل فاتورة رابحة</p><div class="pointer">▼</div><div id="wheel">
+<div id="wheelPrize">🎁 اضغط لف العجلة</div>
+</div><button onclick="spinWheel()">🎡 لف العجلة</button>
 
-.small{
-color:#666;
-margin-top:15px;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="card">
-
-<div class="logo">AZADIR.LY</div>
-
-<h2>🎉 عجلة جوائز أزادير 🎉</h2>
-
-<p>كل فاتورة رابحة</p>
-
-<div class="pointer">▼</div>
-
-<div id="wheel">
-
-<div class="wheel-content">
-
-<div id="wheelIcon">🎁</div>
-
-<div id="wheelPrize"></div>
-
-</div>
-
-</div>
-
-<button onclick="spinWheel()">🎡 لف العجلة</button>
-
-<div id="result"></div>
-
-<div class="small">
-امسح QR واكتشف جائزتك
-</div>
-
-</div>
-
-<script>
+<div id="result"></div></div><script>
 
 const common=[
 "متر",
 "مفك",
+"موس فرش",
+"بلاور",
 "بونتة 4",
 "بونتة 5",
 "بونتة 6",
+"بونتة 8",
+"بونتة 10",
+"بونتة هلتي",
 "مفتاح لانكي",
 "دسكة جلخ",
 "بونتة ربط",
 "صندوق عدة",
 "ألمازة",
+"قفل درج",
 "شفاط زجاج",
 "قادومة",
 "ماكينة سيليكون",
@@ -165,9 +107,13 @@ const common=[
 "بونتة مفصلة 35",
 "خصم 5 دينار",
 "خصم 10 دينار",
+"خصم 15 دينار",
 "خصم 20 دينار",
+"خصم 25 دينار",
 "خصم 30 دينار",
+"خصم 35 دينار",
 "خصم 40 دينار",
+"خصم 45 دينار",
 "خصم 50 دينار"
 ];
 
@@ -177,35 +123,6 @@ const rare=[
 "جلخ",
 "تربلو شحن 12"
 ];
-
-const icons={
-"متر":"📏",
-"مفك":"🪛",
-"بونتة 4":"🔩",
-"بونتة 5":"🔩",
-"بونتة 6":"🔩",
-"مفتاح لانكي":"🔧",
-"دسكة جلخ":"💿",
-"بونتة ربط":"🔩",
-"صندوق عدة":"🧰",
-"ألمازة":"💎",
-"شفاط زجاج":"🪟",
-"قادومة":"⛏️",
-"ماكينة سيليكون":"🛠️",
-"ماكينة برشام":"🛠️",
-"بونتة مفصلة 26":"🔩",
-"بونتة مفصلة 35":"🔩",
-"خصم 5 دينار":"💵",
-"خصم 10 دينار":"💵",
-"خصم 20 دينار":"💵",
-"خصم 30 دينار":"💵",
-"خصم 40 دينار":"💵",
-"خصم 50 دينار":"💰",
-"تربلو ضي":"💡",
-"هلتي":"🔨",
-"جلخ":"⚙️",
-"تربلو شحن 12":"🔋"
-};
 
 let pool=[];
 
@@ -227,14 +144,15 @@ refillPool();
 
 function spinWheel(){
 
+document.getElementById("spinSound").play();
+
 if(pool.length===0){
 refillPool();
 }
 
 const wheel=document.getElementById("wheel");
-const result=document.getElementById("result");
 
-const rotate=1800+Math.floor(Math.random()*1200);
+const rotate=4500+Math.floor(Math.random()*2500);
 
 wheel.style.transform="rotate("+rotate+"deg)";
 
@@ -244,20 +162,15 @@ const idx=Math.floor(Math.random()*pool.length);
 
 const prize=pool.splice(idx,1)[0];
 
-document.getElementById("wheelIcon").innerHTML=
-icons[prize] || "🎁";
-
 document.getElementById("wheelPrize").innerHTML=
 prize;
 
-result.innerHTML=
-"🏆 مبروك!<br><span style='font-size:42px'>"+prize+"</span>";
+document.getElementById("result").innerHTML=
+"🏆 مبروك!<br><span style='font-size:46px'>"+prize+"</span>";
 
-},4000);
+},7000);
 
 }
 
-</script>
-
-</body>
+</script></body>
 </html>
